@@ -2,21 +2,17 @@
 
 This section provides comprehensive guidance for deploying Autoware on Low Speed Autonomy (LSA) vehicles. The documentation covers everything from initial system setup to platform-specific optimizations.
 
-# Struture of the Guidelines
+## Getting Started
 
-The guidelines consist of several parts. You may go directly to [Getting Started](#getting-started) if you want to skip the structure of the guidelines.
+This section provides the essential foundation for deploying Autoware on any platform. It covers:
 
-## Preparation for Deployment
+- System requirements (Ubuntu 22.04 on AMD64/ARM64)
+- Base system preparation and package installation
+- CUDA driver requirements and setup guidance
+- Autoware installation methods (source or Debian packages)
+- System verification and troubleshooting
 
-This guideline uses a containerized Autoware for deployment, which is hardeware independent. Hence, this guideline can be used for both X86 and ARM-based ECUs. The guideline inlcudes the following topics: 
-
-- Target environment requirements (Ubuntu 22.04 on AMD64/ARM64)
-- CUDA driver installation and verification
-- Ansible-based provisioning setup
-- Autoware installation via Debian packages
-- Frequent troubleshooting and verification
-
-Read [Preparation for Deployment](deployment-setup/index.md)
+Start here: [Getting Started Guide](getting-started/index.md)
 
 ## Platform-Specific ECU Deployment
 
@@ -46,26 +42,43 @@ The instructions to deploy containerized Autoware include the following topics:
 - [Containerized development workflow](ARM-based_ECU/containerized-development.md)
 - [Platform-specific customizations](ARM-based_ECU/customization.md)
 
-Read the instructions to deploy containerized Autotware to [x86-based ECUs](x86-based_ECU/index.md)
+Read the instructions to deploy containerized Autotware to [ARM-based ECUs](ARM-based_ECU/index.md)
 
-## RMW Zenoh as the middleware for ROS 2
+## Sensor Configuration
 
-The middleware in ROS 2 have several options. DDS is the default configuration and rmw_zenoh has been approved by ROS 2 to be compatiable as the middleware of ROS 2. The instructions show how to use rmw_zenoh as the middleware of ROS 2. rmw_zenoh has the following features:
+Before deploying Autoware on any ECU, sensors must be properly configured. This section covers:
 
-- Alternative to DDS with improved performance
-- Simplified configuration for LSA applications
-- Enhanced support for cellular and cloud connectivity
-- Optimized for resource-constrained environments
+- Network configuration for Ethernet-based sensors
+- LiDAR setup (Velodyne, Ouster, Hesai)
+- Camera configuration (USB, GMSL, GigE Vision)
+- CAN bus interface for vehicle communication
+- GNSS/IMU integration
+- Time synchronization and calibration
 
-Read the instructions to deploy [rmw_zenoh](rmw_zenoh/index.md)
+Read the comprehensive [Sensor Configuration Guide](sensor-configuration/index.md)
+## Middleware Configuration
 
-# Getting Started
+ROS 2 supports multiple middleware implementations beyond the default DDS. This section covers:
 
-1. **Review Requirements**: Start with [Deployment Setup](deployment-setup/index.md) to understand system requirements
-2. **Choose Your Platform**: Select either x86 or ARM ECUs based on your design requirements. 
-3. **Install Autoware**: Follow the platform-specific installation guide: [x86](x86-based_ECU/index.md) or [ARM](ARM-based_ECU/index.md).
-4. **Configure Middleware**: Optionally switch to [rmw_zenoh](rmw_zenoh/index.md) to improve the performance of ROS messages.
-5. **Customize the system**: Apply platform-specific optimizations for your use case
+- Understanding different RMW (ROS Middleware) options
+- Why Zenoh is recommended for LSA applications
+- Performance benefits for wireless and cellular networks
+- Configuration for both single-vehicle and fleet deployments
+- Easy switching between middleware implementations
+
+Learn more: [Middleware Configuration](middleware-configuration/index.md)
+
+# Deployment Workflow
+
+Follow this recommended workflow for deploying Autoware on your LSA vehicle:
+
+1. **System Setup**: Start with [Getting Started](getting-started/index.md) to prepare your base system
+2. **Platform Configuration**: Choose your platform-specific guide:
+   - [x86 ECUs](x86-based_ECU/index.md) for Intel/AMD systems
+   - [ARM ECUs](ARM-based_ECU/index.md) for NVIDIA Jetson platforms
+3. **Sensor Integration**: Configure your sensors using the [Sensor Configuration Guide](sensor-configuration/index.md)
+4. **Middleware Optimization**: Consider [alternative middleware](middleware-configuration/index.md) for better performance
+5. **Fine-tuning**: Apply platform-specific customizations for your use case
 
 # Support and Resources
 
@@ -74,11 +87,3 @@ Below are the support and resources for the software configuration guideline.
 - **Autoware Documentation**: [https://autoware.org/](https://autoware.org/)
 - **ROS 2 Documentation**: [https://docs.ros.org/](https://docs.ros.org/)
 - **NVIDIA Jetson Resources**: [https://developer.nvidia.com/embedded-computing](https://developer.nvidia.com/embedded-computing)
-
-# Contributing
-When contributing to this documentation:
-
-1. Follow the existing structure and formatting
-2. Test all commands and procedures on target hardware
-3. Include troubleshooting sections for common issues
-4. Keep content up-to-date with latest Autoware releases

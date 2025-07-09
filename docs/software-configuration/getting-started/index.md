@@ -1,4 +1,4 @@
-# Deployment Setup Guide
+# Getting Started
 
 This guide provides the foundational setup required for deploying Autoware on both AMD64 and ARM64 platforms running Ubuntu 22.04. Follow these steps before proceeding to platform-specific ECU configurations.
 
@@ -135,45 +135,72 @@ For more detailed information about the setup process, refer to the [Autoware so
 - [x86 Customization Guide](../x86-based_ECU/customization.md)
 - [ARM Customization Guide](../ARM-based_ECU/customization.md)
 
-## Autoware Deployment via Debian Packages
-(This part should be moved to ECU-dependent deployment.)
+## Autoware Installation via Debian Packages
 
-### 1. Configure Autoware APT Repository
+The NEWSLab team provides pre-built Debian packages for Autoware that simplify the installation process. This method is faster than building from source and ensures consistent deployments.
+
+### 1. Configure Autoware Local Repository
+
+Download and install the appropriate repository configuration package:
+
+#### For x86\_64 (AMD64) Systems:
+```bash
+# Download the repository configuration package
+wget https://github.com/NEWSLabNTU/autoware/releases/download/rosdebian%2F2025.02-1/autoware-localrepo_2025.2-1_amd64.deb
+
+# Install the repository configuration
+sudo dpkg -i autoware-localrepo_2025.2-1_amd64.deb
+```
+
+#### For ARM64 Systems (Non-Jetson):
+```bash
+# Download the repository configuration package  
+wget https://github.com/NEWSLabNTU/autoware/releases/download/rosdebian%2F2025.02-1/autoware-localrepo_2025.2-1_arm64.deb
+
+# Install the repository configuration
+sudo dpkg -i autoware-localrepo_2025.2-1_arm64.deb
+```
+
+#### For NVIDIA Jetson Platforms (AGX Orin with JetPack 6.0):
+```bash
+# Download the Jetson-specific repository configuration package
+wget https://github.com/NEWSLabNTU/autoware/releases/download/rosdebian%2F2025.02-1/autoware-localrepo_2025.2-1_jetpack6.0.deb
+
+# Install the repository configuration
+sudo dpkg -i autoware-localrepo_2025.2-1_jetpack6.0.deb
+```
+
+### 2. Update Package Lists
+
+After installing the repository configuration:
 
 ```bash
-# Download and install repository configuration
-wget https://github.com/autowarefoundation/autoware/releases/latest/download/autoware-apt-config.deb
-sudo dpkg -i autoware-apt-config.deb
-
-# Update package lists
+# Update apt package lists to include the new repository
 sudo apt update
 ```
 
-### 2. Deploy Autoware Core Packages
+### 3. Install Autoware Packages
+
+Install the full Autoware stack or specific components:
 
 ```bash
-# Install complete Autoware stack
-sudo apt install -y autoware-universe
-
-# Or install specific components
-sudo apt install -y \
-  autoware-common \
-  autoware-control \
-  autoware-localization \
-  autoware-perception \
-  autoware-planning
+sudo apt install -y autoware-full
 ```
 
-### 3. Configure Environment
+### 4. Configure Environment
+
+Set up your shell environment to use the installed Autoware:
 
 ```bash
 # Add Autoware setup to bashrc
-echo "source /opt/autoware/setup.bash" >> ~/.bashrc
+echo "source /opt/autoware/autoware-env" >> ~/.bashrc
 source ~/.bashrc
 
 # Verify installation
 ros2 pkg list | grep autoware
 ```
+
+**Note**: The Debian packages install Autoware to `/opt/autoware` and are designed to coexist with other ROS 2 installations.
 
 ## Post-Installation Verification
 
@@ -217,8 +244,8 @@ fi
 echo ""
 
 echo "=== Autoware Verification ==="
-if [ -f /opt/autoware/setup.bash ]; then
-    source /opt/autoware/setup.bash
+if [ -f /opt/autoware/autoware-env ]; then
+    source /opt/autoware/autoware-env
     echo "Autoware packages installed: $(ros2 pkg list | grep -c autoware)"
 else
     echo "Autoware not found"
@@ -320,7 +347,7 @@ With the base system configured, proceed to:
 
 1. **[x86-based ECU Configuration](../x86-based_ECU/index.md)** for Intel/AMD platforms
 2. **[ARM-based ECU Configuration](../ARM-based_ECU/index.md)** for NVIDIA Jetson platforms
-3. **[RMW Zenoh Setup](../rmw_zenoh/index.md)** for alternative middleware configuration
+3. **[RMW Zenoh Setup](../middleware-configuration/index.md)** for alternative middleware configuration
 
 ## Additional Resources
 

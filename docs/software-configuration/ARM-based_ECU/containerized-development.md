@@ -1,4 +1,4 @@
-# Containerized Development for ARM-based ECUs
+# Container Development
 
 This comprehensive guide covers the containerized development environment for ARM-based ECUs, particularly focused on NVIDIA AGX Orin platforms. The content is adapted from the AutoSDV project, which provides a sophisticated containerized approach to Autoware development.
 
@@ -104,14 +104,14 @@ The containerized environment uses NVIDIA's official L4T (Linux for Tegra) image
 
 ### Container vs. Native Development
 
-| Aspect | Containerized | Native |
-|--------|--------------|--------|
-| **Setup Time** | < 30 minutes | Several hours |
-| **Reproducibility** | Guaranteed | Variable |
-| **Dependency Management** | Automated | Manual |
-| **Hardware Access** | Full (with proper flags) | Direct |
-| **Performance** | ~98% of native | 100% |
-| **Team Scalability** | Excellent | Challenging |
+| Aspect                    | Containerized            | Native        |
+|---------------------------|--------------------------|---------------|
+| **Setup Time**            | < 30 minutes             | Several hours |
+| **Reproducibility**       | Guaranteed               | Variable      |
+| **Dependency Management** | Automated                | Manual        |
+| **Hardware Access**       | Full (with proper flags) | Direct        |
+| **Performance**           | ~98% of native           | 100%          |
+| **Team Scalability**      | Excellent                | Challenging   |
 
 ## Environment Customization
 
