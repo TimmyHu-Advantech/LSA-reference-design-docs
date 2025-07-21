@@ -11,6 +11,11 @@ This guide covers deploying Autoware on Low Speed Autonomy (LSA) vehicles.
 3. **[Sensor Configuration](sensor-configuration/index.md)** - Set up your sensors
 4. **[Middleware Configuration](middleware-configuration/index.md)** - Optimize performance
 
+## Advanced Topics
+
+- **[Workflow Customization](workflow-customization/index.md)** - Customize deployment with Ansible and Docker
+- **[Package Creation](package-creation/index.md)** - Create Debian packages for easy deployment
+
 ## Platform-Specific Deployment
 
 ### x86\_64-based ECUs

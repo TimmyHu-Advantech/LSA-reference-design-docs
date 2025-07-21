@@ -6,3 +6,5 @@ nav:
   - ARM ECUs: ARM-based_ECU/
   - Sensors: sensor-configuration/
   - Middleware: middleware-configuration/
+  - Workflow Customization: workflow-customization/
+  - Package Creation: package-creation/

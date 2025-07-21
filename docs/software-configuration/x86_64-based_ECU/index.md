@@ -1,4 +1,4 @@
-# x86_64-based ECU Configuration
+# x86\_64-based ECU Configuration
 
 Deploy Autoware on Intel/AMD platforms for LSA vehicles.
 
@@ -6,7 +6,7 @@ Deploy Autoware on Intel/AMD platforms for LSA vehicles.
 
 ### 1. CUDA Toolkit Installation
 
-For x86-based systems, CUDA must be installed manually. Visit the [NVIDIA CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive) to find the appropriate version for your system.
+For x86\_64-based systems, CUDA must be installed manually. Visit the [NVIDIA CUDA Toolkit Archive](https://developer.nvidia.com/cuda-toolkit-archive) to find the appropriate version for your system.
 
 **Recommended Installation Method: deb (network)**
 

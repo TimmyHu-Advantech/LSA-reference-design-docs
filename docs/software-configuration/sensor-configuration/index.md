@@ -44,6 +44,29 @@ echo "net.core.rmem_max=134217728" | sudo tee -a /etc/sysctl.conf
 echo "net.core.rmem_default=134217728" | sudo tee -a /etc/sysctl.conf
 ```
 
+### Time-Sensitive Networking (TSN)
+
+For real-time communication requirements, configure TSN on supported hardware:
+
+```yaml
+# ansible/roles/tsn_config/tasks/main.yml
+---
+- name: Install TSN utilities
+  apt:
+    name:
+      - linuxptp
+      - ethtool
+    state: present
+
+- name: Configure PTP for time synchronization
+  template:
+    src: ptp4l.conf.j2
+    dest: /etc/linuxptp/ptp4l.conf
+
+- name: Enable hardware timestamping
+  command: "ethtool -T {{ tsn_interface }}"
+```
+
 ## LiDAR Configuration
 
 ### Velodyne LiDAR
@@ -55,6 +78,29 @@ Velodyne LiDARs use UDP packets for data transmission over Ethernet.
 ```bash
 # Install Velodyne ROS 2 driver
 sudo apt install ros-humble-velodyne
+```
+
+#### ARM-Specific Configuration
+
+For ARM platforms like NVIDIA Jetson:
+
+```yaml
+# ansible/roles/velodyne_arm/tasks/main.yml
+---
+- name: Install Velodyne driver dependencies
+  apt:
+    name:
+      - ros-humble-velodyne
+      - ros-humble-velodyne-pointcloud
+    state: present
+
+- name: Configure network interface for LiDAR
+  nmcli:
+    conn_name: lidar0
+    ifname: eth1
+    type: ethernet
+    ip4: 192.168.1.100/24
+    state: present
 ```
 
 #### Configuration
@@ -115,6 +161,22 @@ ouster_driver:
     imu_port: 7503
     lidar_mode: "1024x10"  # Options: 512x10, 1024x10, 2048x10
     timestamp_mode: "TIME_FROM_ROS_TIME"
+```
+
+#### ARM-Specific DMA Optimization
+
+For ARM platforms, enable DMA transfer for better performance:
+
+```yaml
+# ansible/roles/ouster_arm/tasks/main.yml
+---
+- name: Configure Ouster with DMA transfer
+  template:
+    src: ouster_dma_config.j2
+    dest: /etc/ros2/ouster_config.yaml
+  vars:
+    dma_enabled: true
+    buffer_size_mb: 256
 ```
 
 ### Hesai LiDAR
@@ -192,6 +254,31 @@ sudo udevadm trigger
 ### GMSL Cameras
 
 GMSL (Gigabit Multimedia Serial Link) cameras are commonly used in automotive applications, especially on NVIDIA platforms.
+
+#### GMSL Configuration on AGX Orin
+
+```bash
+# Enable GMSL cameras
+sudo modprobe nvgmsl
+echo "nvgmsl" | sudo tee -a /etc/modules-load.d/nvgmsl.conf
+
+# Configure camera parameters
+v4l2-ctl -d /dev/video0 --set-fmt-video=width=1920,height=1080,pixelformat=YUYV
+```
+
+#### GMSL Launch Configuration
+
+```yaml
+# ~/autoware_config/sensors/gmsl_config.yaml
+gmsl_camera:
+  ros__parameters:
+    camera_info_url: "file:///opt/autoware/calibration/gmsl_camera.yaml"
+    video_device: "/dev/video0"
+    pixel_format: "YUYV"
+    image_width: 1920
+    image_height: 1080
+    framerate: 30.0
+```
 
 #### GMSL Configuration on NVIDIA Platforms
 
@@ -282,6 +369,16 @@ sudo ip link set up can0
 
 # Verify CAN interface is up
 ip -details -statistics link show can0
+```
+
+#### ARM-Specific CAN Configuration
+
+For ARM platforms, configure CAN with optimized settings:
+
+```bash
+# Configure CAN filters for efficiency
+sudo ip link set can0 type can bitrate 500000 \
+  sample-point 0.875 restart-ms 100
 ```
 
 ### Virtual CAN for Testing

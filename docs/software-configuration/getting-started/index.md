@@ -2,6 +2,20 @@
 
 Foundational setup for deploying Autoware on Ubuntu 22.04 (AMD64/ARM64).
 
+## Deployment Overview
+
+```mermaid
+graph TD
+    A[Configure Host System] --> B[Pull Docker Image]
+    B --> C[Enter Container]
+    C --> D[Configure Environment]
+    D --> E[Install Autoware Packages]
+    E --> F[Verify Installation]
+    
+    style A fill:#e3f2fd
+    style F fill:#c8e6c9
+```
+
 ## System Requirements
 
 ### Hardware Requirements
@@ -28,6 +42,13 @@ Foundational setup for deploying Autoware on Ubuntu 22.04 (AMD64/ARM64).
 - Kernel 5.15+
 - Real-time kernel recommended for production
 
+## Deployment Options
+
+Choose between two deployment approaches:
+
+1. **Native Installation** - Direct installation on the host system
+2. **Containerized Deployment** (Recommended) - Using Docker for isolation and reproducibility
+
 ## System Preparation
 
 ### 1. Install Essential Packages
@@ -47,99 +68,119 @@ sudo apt install -y \
   lsb-release \
   software-properties-common \
   python3-pip \
-  python3-venv
+  python3-venv \
+  ansible
 ```
 
-### 2. CUDA Toolkit Installation
 
-CUDA installation is hardware-specific and varies significantly between x86 and ARM platforms. Please refer to the appropriate platform-specific guide for detailed CUDA installation instructions:
+## Containerized Deployment Workflow
 
-- **For x86_64-based ECUs**: See [x86\_64 CUDA Installation Guide](../x86_64-based_ECU/index.md#cuda-and-gpu-configuration)
-- **For ARM-based ECUs**: See [ARM CUDA Installation Guide](../ARM-based_ECU/index.md#cuda-toolkit-installation)
+This section describes the recommended containerized deployment approach using Docker, Ansible, and Debian packages.
 
-## Environment Setup
+### 1. Configure Host System
 
-The Autoware project provides an automated setup script that installs all necessary dependencies and configures your development environment.
+Before deploying containers, ensure your host system has the necessary tools:
 
-### 1. Clone Autoware Repository
+1. **Install Docker Engine**: Follow the [official Docker installation guide for Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
+   ```bash
+   # After installation, add user to docker group
+   sudo usermod -aG docker $USER
+   newgrp docker
+   ```
+
+2. **Install NVIDIA Container Toolkit**: Follow the [official NVIDIA installation guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html)
+   - **Note**: Pre-installed with JetPack on NVIDIA Jetson devices
+
+3. **Install NVIDIA Driver**: Ensure NVIDIA drivers are installed on the host
+   ```bash
+   # Verify NVIDIA driver installation
+   nvidia-smi
+   ```
+
+### 2. Pull Pre-configured Images
+
+Use pre-configured Docker images that include CUDA and necessary dependencies:
+
+#### For x86\_64 Systems
+```bash
+docker pull ghcr.io/autowarefoundation/autoware:universe-cuda-20250414
+```
+
+#### For ARM64 Systems (Jetson)
+```bash
+docker pull nvcr.io/nvidia/l4t-tensorrt:r8.6.2-devel
+```
+
+**Note**: These images include CUDA pre-installed. For custom CUDA installations, see [Workflow Customization](../workflow-customization/index.md).
+
+### 3. Enter Container Environment
+
+Launch the container with GPU support and necessary mounts:
 
 ```bash
-# Clone the Autoware repository
-git clone https://github.com/autowarefoundation/autoware.git
+docker run -it --name autoware-dev \
+  --gpus all \
+  --runtime nvidia \
+  --network host \
+  --privileged \
+  -v ~/autoware-deployment:/workspace \
+  -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+  -e DISPLAY=$DISPLAY \
+  <image-name> \
+  /bin/bash
+```
+
+Replace `<image-name>` with the image you pulled in step 2.
+
+### 4. Configure Container Environment with Ansible
+
+Inside the container, download and run the Ansible configuration:
+
+```bash
+git clone -b 2025.02 https://github.com/autowarefoundation/autoware.git
 cd autoware
-
-# Checkout the 2025.02 branch
-git checkout 2025.02
-```
-
-### 2. Run Setup Script
-
-The setup script will automatically install ROS 2, development tools, and all required dependencies. The script may take 10-30 minutes to complete depending on your internet connection and system performance.
-
-
-```bash
-# Run the setup script
 ./setup-dev-env.sh
 ```
 
-## Autoware Installation via Debian Packages
+### 5. Install Autoware Debian Packages
 
-The NEWSLab team provides pre-built Debian packages for Autoware that simplify the installation process. This method is faster than building from source and ensures consistent deployments.
+After Ansible configuration, visit the Autoware Debian package [release page](https://github.com/NEWSLabNTU/autoware/releases/tag/rosdebian%2F2025.02-1) and install Autoware packages:
 
-### 1. Configure Autoware Local Repository
-
-Download and install the appropriate repository configuration package:
-
-#### For x86\_64 Systems:
 ```bash
-# Download the repository configuration package
-wget https://github.com/NEWSLabNTU/autoware/releases/download/rosdebian%2F2025.02-1/autoware-localrepo_2025.2-1_amd64.deb
-
-# Install the repository configuration
+# Configure Autoware repository (example for x86_64)
+# Visit the release page and download autoware-localrepo_2025.2-1_amd64.deb. Then,
 sudo apt install ./autoware-localrepo_2025.2-1_amd64.deb
-```
 
-#### For ARM64 Systems (Non-Jetson):
-```bash
-# Download the repository configuration package
-wget https://github.com/NEWSLabNTU/autoware/releases/download/rosdebian%2F2025.02-1/autoware-localrepo_2025.2-1_arm64.deb
-
-# Install the repository configuration
-sudo apt install ./autoware-localrepo_2025.2-1_arm64.deb
-```
-
-#### For NVIDIA Jetson Platforms (AGX Orin with JetPack 6.0):
-```bash
-# Download the Jetson-specific repository configuration package
-wget https://github.com/NEWSLabNTU/autoware/releases/download/rosdebian%2F2025.02-1/autoware-localrepo_2025.2-1_jetpack6.0.deb
-
-# Install the repository configuration
-sudo apt install ./autoware-localrepo_2025.2-1_jetpack6.0.deb
-```
-
-### 2. Install Autoware
-
-Update apt package lists and install the full Autoware stack or specific components:
-
-```bash
+# Update and install Autoware
 sudo apt update
 sudo apt install -y autoware-full
+
+# Source the environment
+source /opt/autoware/autoware-env
 ```
 
-### 3. Configure Environment
+For ARM64/Jetson systems, use the appropriate repository package from the release page.
 
-Set up your shell environment to use the installed Autoware:
+### 6. Verification
+
+Verify the installation is successful:
 
 ```bash
-# Add Autoware setup to bashrc
-echo "source /opt/autoware/autoware-env" >> ~/.bashrc
-source ~/.bashrc
+# Check ROS 2 installation
+ros2 --version
 
-# Verify installation
+# Check Autoware packages
 ros2 pkg list | grep autoware
+
+# Verify CUDA (should show GPU information)
+nvidia-smi
+
+# Run a simple test
+ros2 launch autoware_launch planning_simulator.launch.xml
 ```
 
-**Note**: The Debian packages install Autoware to `/opt/autoware` and are designed to coexist with other ROS 2 installations.
+If all checks pass, your containerized Autoware environment is ready for use.
+
 
 ## Post-Installation Verification
 
