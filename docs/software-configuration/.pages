@@ -1,10 +1,10 @@
 title: Software Configuration
 nav:
   - index.md
-  - Getting Started: getting-started/
-  - x86_64 ECUs: x86_64-based_ECU/
-  - ARM ECUs: ARM-based_ECU/
-  - Sensors: sensor-configuration/
-  - Middleware: middleware-configuration/
-  - Workflow Customization: workflow-customization/
-  - Package Creation: package-creation/
+  - getting-started
+  - x86_64-based_ECU
+  - ARM-based_ECU
+  - sensor-configuration
+  - middleware-configuration
+  - workflow-customization
+  - package-creation

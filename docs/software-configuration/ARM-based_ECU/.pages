@@ -1,5 +1,3 @@
-title: ARM ECUs
+title: Configuring ARM ECUs
 nav:
   - index.md
-  - Container Development: containerized-development.md
-  - Customization: customization.md
