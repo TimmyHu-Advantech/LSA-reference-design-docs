@@ -1,26 +1,20 @@
 # Middleware Configuration
 
-## Overview
+ROS 2 supports multiple middleware implementations (RMW). While DDS is default, Zenoh offers significant advantages for LSA applications.
 
-ROS 2 supports multiple middleware implementations (RMW) that handle the underlying communication between nodes. While DDS (Data Distribution Service) is the default middleware, alternative implementations like Zenoh can provide significant advantages for specific use cases, particularly in Low Speed Autonomy applications.
+## Middleware Options
 
-## Available Middleware Options
+### DDS (Default)
+- Fast-RTPS (ROS 2 Humble default)
+- Cyclone DDS (lightweight)
+- RTI Connext (commercial)
 
-### 1. DDS Implementations (Default)
-- **Fast-RTPS**: Default in ROS 2 Humble
-- **CycloneDDS**: Lightweight, high-performance option
-- **RTI Connext**: Commercial solution with advanced features
-
-### 2. Zenoh (Recommended for LSA)
-A next-generation middleware that has achieved Tier 1 support in ROS 2, offering significant performance and operational benefits for autonomous vehicle deployments.
-
-## Why Consider Alternative Middleware?
-
-The choice of middleware can significantly impact:
-- **Performance**: Message latency, throughput, and resource usage
-- **Network Compatibility**: WiFi, cellular, and internet connectivity
-- **Configuration Complexity**: Setup and tuning requirements
-- **Debugging Capability**: Available tools and monitoring options
+### Zenoh (Recommended for LSA)
+Tier 1 middleware optimized for autonomous vehicles with:
+- Better wireless/cellular performance
+- Lower latency and resource usage
+- Zero configuration
+- Cloud-native support
 
 ## Zenoh for Low Speed Autonomy
 
@@ -45,7 +39,7 @@ The choice of middleware can significantly impact:
 ## Installation
 
 ### Prerequisites
-Ensure you have completed the base Autoware installation from the [Getting Started](../getting-started/index.md) guide.
+Complete the [Getting Started](../getting-started/index.md) guide first.
 
 ### Install Zenoh RMW
 
@@ -271,5 +265,5 @@ export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 ## Next Steps
 
 - Continue to [Sensor Configuration](../sensor-configuration/index.md)
-- Review platform-specific guides: [x86 ECUs](../x86-based_ECU/index.md) or [ARM ECUs](../ARM-based_ECU/index.md)
+- Review platform-specific guides: [x86_64 ECUs](../x86_64-based_ECU/index.md) or [ARM ECUs](../ARM-based_ECU/index.md)
 - Learn about [Zenoh architecture](https://zenoh.io/docs/)
