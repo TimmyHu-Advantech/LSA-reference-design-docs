@@ -9,13 +9,13 @@ You can access the document at [https://autowarefoundation.github.io/LSA-referen
 * Install necessary packages
 
 ```shell
-sudo apt install mkdocs mkdocs-material
+make prepare
 ```
 
 * Run the local mkdocs server
 
 ```shell
-mkdocs serve
+make serve
 ```
 
 * You can access the local document on [http://127.0.0.1:8000/LSA-reference-design-docs/](http://127.0.0.1:8000/LSA-reference-design-docs/)
