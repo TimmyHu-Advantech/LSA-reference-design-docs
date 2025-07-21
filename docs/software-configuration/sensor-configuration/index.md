@@ -4,11 +4,11 @@ Configure sensors for LSA vehicles with Autoware (platform-agnostic).
 
 ## Supported Sensors
 
-- **LiDAR**: 3D environment perception
-- **Cameras**: Object detection and classification
-- **CAN Bus**: Vehicle control interface
-- **GNSS/IMU**: Localization and navigation
-- **Radar**: Additional perception (optional)
+- **[LiDAR](../../hardware-configuration/Sensors-and-Actuators/lidars.md)**: 3D environment perception
+- **[Cameras](../../hardware-configuration/Sensors-and-Actuators/index.md)**: Object detection and classification
+- **[CAN Bus](../../hardware-configuration/Sensors-and-Actuators/index.md)**: Vehicle control interface
+- **[GNSS/IMU](../../hardware-configuration/Sensors-and-Actuators/index.md)**: Localization and navigation
+- **[Radar](../../hardware-configuration/Sensors-and-Actuators/index.md)**: Additional perception (optional)
 
 ## Network Configuration
 
@@ -71,7 +71,7 @@ For real-time communication requirements, configure TSN on supported hardware:
 
 ### Velodyne LiDAR
 
-Velodyne LiDARs use UDP packets for data transmission over Ethernet.
+Velodyne LiDARs use UDP packets for data transmission over Ethernet. For hardware specifications and supported models, see [Velodyne Hardware Information](../../hardware-configuration/Sensors-and-Actuators/lidars.md#velodyne-3d-lidar-sensors).
 
 #### Installation
 
@@ -141,7 +141,7 @@ Create a configuration file for your Velodyne sensor:
 
 ### Ouster LiDAR
 
-Ouster LiDARs provide both point cloud and IMU data.
+Ouster LiDARs provide both point cloud and IMU data. For hardware specifications and supported models, see [Ouster Hardware Information](../../hardware-configuration/Sensors-and-Actuators/lidars.md#ouster-3d-lidar-sensors).
 
 #### Installation
 
@@ -181,6 +181,8 @@ For ARM platforms, enable DMA transfer for better performance:
 
 ### Hesai LiDAR
 
+Hesai LiDARs are popular in autonomous vehicle applications. For hardware specifications and supported models, see [Hesai Hardware Information](../../hardware-configuration/Sensors-and-Actuators/lidars.md#hesai-3d-lidar-sensors).
+
 #### Installation
 
 ```bash
@@ -205,7 +207,120 @@ colcon build --packages-select hesai_ros_driver
     resolution: 0.2  # Angular resolution in degrees
 ```
 
+### RoboSense LiDAR
+
+RoboSense LiDARs offer various models for different autonomous driving applications. For hardware specifications and supported models, see [RoboSense Hardware Information](../../hardware-configuration/Sensors-and-Actuators/lidars.md#robosense-3d-lidar-sensors).
+
+#### Installation
+
+```bash
+# Clone and build RoboSense driver
+cd ~/autoware_ws/src
+git clone https://github.com/RoboSense-LiDAR/rslidar_sdk.git
+cd ~/autoware_ws
+colcon build --packages-select rslidar_sdk
+```
+
+#### Configuration
+
+```yaml
+# ~/autoware_config/sensors/robosense_config.yaml
+/**:
+  ros__parameters:
+    lidar_type: "RS32"  # Options: RS16, RS32, RSBP, RS128, RS80, RSM1, RSHelios
+    device_ip: "192.168.1.200"
+    msop_port: 6699
+    difop_port: 7788
+    start_angle: 0
+    end_angle: 360
+    min_distance: 0.2
+    max_distance: 200
+    use_lidar_clock: false
+```
+
+### Leishen LiDAR
+
+Leishen provides cost-effective LiDAR solutions for autonomous vehicles. For hardware specifications and supported models, see [Leishen Hardware Information](../../hardware-configuration/Sensors-and-Actuators/lidars.md#leishen-3d-lidar-sensors).
+
+#### Installation
+
+```bash
+# Clone and build Leishen driver
+cd ~/autoware_ws/src
+git clone https://github.com/leishen-lidar/LSLidar_ROS2_driver.git
+cd ~/autoware_ws
+colcon build --packages-select lslidar_driver
+```
+
+#### Configuration
+
+```yaml
+# ~/autoware_config/sensors/leishen_config.yaml
+/**:
+  ros__parameters:
+    device_ip: "192.168.1.222"
+    device_port: 2368
+    device_type: "C32"  # Options: C16, C32, CH32, CH128, C32W
+    frame_id: "lslidar"
+    scan_frequency: 10.0
+    min_range: 0.15
+    max_range: 150.0
+```
+
+### Livox LiDAR
+
+Livox offers solid-state LiDAR technology with unique non-repetitive scanning patterns. For hardware specifications and supported models, see [Livox Hardware Information](../../hardware-configuration/Sensors-and-Actuators/lidars.md#livox-3d-lidar-sensors).
+
+#### Installation
+
+```bash
+# Install Livox ROS 2 driver
+sudo apt install ros-humble-livox-ros2-driver
+```
+
+#### Configuration
+
+```yaml
+# ~/autoware_config/sensors/livox_config.yaml
+/**:
+  ros__parameters:
+    broadcast_code: "3JEDHC900100791"  # Device broadcast code
+    enable_lidar_bag: false
+    enable_imu_bag: false
+    extrinsic_parameter_source: 0  # 0: broadcast, 1: from config file
+    enable_high_sensitivity: false
+    frame_id: "livox_frame"
+```
+
+### Robin W Wide FOV LiDAR
+
+Robin W offers wide field of view LiDAR technology for comprehensive environment sensing. For hardware specifications and supported models, see [Robin W Hardware Information](../../hardware-configuration/Sensors-and-Actuators/index.md#robin-w-wide-fov-lidar).
+
+#### Installation
+
+```bash
+# Robin W LiDAR typically uses manufacturer-provided SDK
+# Follow the installation guide from Seyond for ROS 2 integration
+```
+
+#### Configuration
+
+```yaml
+# ~/autoware_config/sensors/robin_w_config.yaml
+/**:
+  ros__parameters:
+    device_ip: "192.168.1.250"
+    device_port: 7780
+    frame_id: "robin_w"
+    horizontal_fov: 120.0  # degrees
+    vertical_fov: 70.0     # degrees
+    min_range: 0.1
+    max_range: 150.0
+```
+
 ## Camera Configuration
+
+For camera hardware specifications and supported models, see [Camera Hardware Information](../../hardware-configuration/Sensors-and-Actuators/index.md).
 
 ### USB Cameras
 
@@ -346,7 +461,7 @@ sudo sysctl -w net.core.rmem_default=33554432
 
 ## CAN Bus Configuration
 
-CAN (Controller Area Network) is essential for vehicle control and telemetry.
+CAN (Controller Area Network) is essential for vehicle control and telemetry. For CAN interface hardware information, see [CAN Bus Hardware Information](../../hardware-configuration/Sensors-and-Actuators/index.md).
 
 ### SocketCAN Setup
 
@@ -448,6 +563,8 @@ sudo systemctl enable can-setup.service
 ```
 
 ## GNSS/IMU Configuration
+
+For GNSS/IMU hardware specifications and supported models, see [GNSS/IMU Hardware Information](../../hardware-configuration/Sensors-and-Actuators/index.md).
 
 ### GNSS Receivers
 

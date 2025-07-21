@@ -4,6 +4,8 @@
 
 The page lists the sensors and actuators being tested for LSA, which can support the ODD of LSA. 
 
+For software configuration of these sensors, see the [Sensor Configuration Guide](../../software-configuration/sensor-configuration/index.md).
+
 Another page on [Autoware Document](https://autowarefoundation.github.io/autoware-documentation/main/reference-hw/lidars/) lists the sensors and actuators being used for other use scenarios.
 
 ## **Velodyne 3D LIDAR Sensors**
@@ -11,6 +13,8 @@ Another page on [Autoware Document](https://autowarefoundation.github.io/autowar
 ![lidar-velodyne.png](images/lidar-velodyne.png)
 
 Velodyne Lidars which has ROS 2 driver and tested by one or more community members are listed below:
+
+**Software Configuration**: See [Velodyne LiDAR Configuration Guide](../../software-configuration/sensor-configuration/index.md#velodyne-lidar)
 
 | Supported Products List | Range | FOV (V), (H)          | ROS 2 Driver | Autoware Tested (Y/N) |
 | ----------------------- | ----- | --------------------- | ------------ | --------------------- |
@@ -25,6 +29,8 @@ Velodyne Lidars which has ROS 2 driver and tested by one or more community membe
 ![images/lidar-ouster.png](images/lidar-ouster.png)
 
 Ouster Lidars which has ROS 2 driver and tested by one or more community members are listed below:
+
+**Software Configuration**: See [Ouster LiDAR Configuration Guide](../../software-configuration/sensor-configuration/index.md#ouster-lidar)
 
 | Supported Products List | Range | FOV (V), (H)    | ROS 2 Driver | Autoware Tested (Y/N) |
 | ----------------------- | ----- | --------------- | ------------ | --------------------- |

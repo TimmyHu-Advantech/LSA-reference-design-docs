@@ -1,10 +1,14 @@
 # LIDARs
 
+For software configuration of these LiDAR sensors, see the [Sensor Configuration Guide](../../software-configuration/sensor-configuration/index.md#lidar-configuration).
+
 ## **Velodyne 3D LIDAR Sensors**
 
 ![lidar-velodyne.png](images/lidar-velodyne.png)
 
 Velodyne Lidars which has ROS 2 driver and tested by one or more community members are listed below:
+
+**Software Configuration**: See [Velodyne LiDAR Configuration Guide](../../software-configuration/sensor-configuration/index.md#velodyne-lidar)
 
 | Supported Products List | Range | FOV (V), (H)          | ROS 2 Driver | Autoware Tested (Y/N) |
 | ----------------------- | ----- | --------------------- | ------------ | --------------------- |
@@ -28,6 +32,8 @@ Link to company website:
 
 RoboSense Lidars which has ROS 2 driver and tested by one or more community members are listed below:
 
+**Software Configuration**: See [RoboSense LiDAR Configuration Guide](../../software-configuration/sensor-configuration/index.md#robosense-lidar)
+
 | Supported Products List | Range | FOV (V), (H)                         | ROS 2 Driver | Autoware Tested (Y/N) |
 | ----------------------- | ----- | ------------------------------------ | ------------ | --------------------- |
 | M1                      | 200m  | 25°/120°                             | -            | -                     |
@@ -48,6 +54,8 @@ Link to company website:
 ![images/lidar-hesai.png](images/lidar-hesai.png)
 
 Hesai Lidars which has ROS 2 driver and tested by one or more community members are listed below:
+
+**Software Configuration**: See [Hesai LiDAR Configuration Guide](../../software-configuration/sensor-configuration/index.md#hesai-lidar)
 
 | Supported Products List | Range | FOV (V), (H)            | ROS 2 Driver | Autoware Tested (Y/N) |
 | ----------------------- | ----- | ----------------------- | ------------ | --------------------- |
@@ -75,6 +83,8 @@ Link to company website:
 
 Leishen Lidars which has ROS 2 driver and tested by one or more community members are listed below:
 
+**Software Configuration**: See [Leishen LiDAR Configuration Guide](../../software-configuration/sensor-configuration/index.md#leishen-lidar)
+
 | Supported Products List | Range | FOV (V), (H)         | ROS 2 Driver | Autoware Tested (Y/N) |
 | ----------------------- | ----- | -------------------- | ------------ | --------------------- |
 | LS C16                  | 150m  | (+15°/-15°), (360°)  | Y            | -                     |
@@ -94,6 +104,8 @@ Link to company website:
 ![images/lidar-livox.png](images/lidar-livox.png)
 
 Livox Lidars which has ROS 2 driver and tested by one or more community members are listed below:
+
+**Software Configuration**: See [Livox LiDAR Configuration Guide](../../software-configuration/sensor-configuration/index.md#livox-lidar)
 
 | Supported Products List | Range | FOV (V), (H)       | ROS 2 Driver | Autoware Tested (Y/N) |
 | ----------------------- | ----- | ------------------ | ------------ | --------------------- |
@@ -117,6 +129,8 @@ Link to company website:
 ![images/lidar-ouster.png](images/lidar-ouster.png)
 
 Ouster Lidars which has ROS 2 driver and tested by one or more community members are listed below:
+
+**Software Configuration**: See [Ouster LiDAR Configuration Guide](../../software-configuration/sensor-configuration/index.md#ouster-lidar)
 
 | Supported Products List | Range | FOV (V), (H)    | ROS 2 Driver | Autoware Tested (Y/N) |
 | ----------------------- | ----- | --------------- | ------------ | --------------------- |
