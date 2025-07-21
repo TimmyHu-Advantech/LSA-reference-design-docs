@@ -1,16 +1,14 @@
-# Sensor Configuration Guide
+# Sensor Configuration
 
-This guide provides comprehensive instructions for configuring various sensors used in Low Speed Autonomy vehicles with Autoware. The configurations covered here are platform-agnostic and can be applied to both x86 and ARM-based ECUs.
+Configure sensors for LSA vehicles with Autoware (platform-agnostic).
 
-## Overview
+## Supported Sensors
 
-Autoware supports a wide range of sensors for autonomous vehicle perception and localization:
-
-- **LiDAR**: Primary sensors for 3D environment perception
-- **Cameras**: Visual perception for object detection and classification
-- **CAN Bus**: Vehicle interface for control and telemetry
-- **GNSS/IMU**: Localization and navigation sensors
-- **Radar**: Additional perception capability (optional)
+- **LiDAR**: 3D environment perception
+- **Cameras**: Object detection and classification
+- **CAN Bus**: Vehicle control interface
+- **GNSS/IMU**: Localization and navigation
+- **Radar**: Additional perception (optional)
 
 ## Network Configuration
 
@@ -505,7 +503,7 @@ cansend can0 123#DEADBEEF
 
 ## Next Steps
 
-- Proceed to [x86-based ECU Configuration](../x86-based_ECU/index.md) for Intel/AMD platforms
+- Proceed to [x86_64-based ECU Configuration](../x86_64-based_ECU/index.md) for Intel/AMD platforms
 - Or [ARM-based ECU Configuration](../ARM-based_ECU/index.md) for NVIDIA Jetson platforms
 - Configure sensor calibration using Autoware's calibration tools
 - Set up sensor fusion parameters for optimal perception performance
