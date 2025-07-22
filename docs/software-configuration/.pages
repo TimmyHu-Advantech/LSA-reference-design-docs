@@ -1,5 +1,10 @@
+title: Software Configuration
 nav:
   - index.md
+  - getting-started
+  - x86_64-based_ECU
   - ARM-based_ECU
-  - x86-based_ECU
-  - rmw_zenoh
+  - sensor-configuration
+  - middleware-configuration
+  - workflow-customization
+  - package-creation
