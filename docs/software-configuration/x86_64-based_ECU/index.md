@@ -91,5 +91,4 @@ ros2 run rqt_graph rqt_graph
 ```
 
 ## Next Steps
-
 See [Sensor Configuration Guide](../sensor-configuration/index.md) for detailed sensor setup.

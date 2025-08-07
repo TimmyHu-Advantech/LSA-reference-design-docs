@@ -75,6 +75,9 @@ sudo apt install -y \
 
 ## Containerized Deployment Workflow
 
+If you prefer to install Autoware on Intel/AMD-based ECUs from native source code, you may refer to [this page](./source-installation.md) and skip the remaining of this page.
+
+
 This section describes the recommended containerized deployment approach using Docker, Ansible, and Debian packages.
 
 ### 1. Configure Host System

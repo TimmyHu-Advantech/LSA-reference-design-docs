@@ -19,10 +19,13 @@ This guide covers deploying Autoware on Low Speed Autonomy (LSA) vehicles.
 ## Platform-Specific Deployment
 
 ### x86\_64-based ECUs
-Deploy containerized Autoware on Intel/AMD platforms. [View tested ECUs](../hardware-configuration/ECUs/x86_64ECUs/index.md).
+- [View tested ECUs](../hardware-configuration/ECUs/x86_64ECUs/index.md).
+- Deploy native Autoware on Intel/AMD platforms. 
+- Deploy containerized Autoware on Intel/AMD platforms. 
 
 ### ARM-based ECUs  
-Deploy on NVIDIA Jetson and other ARM platforms for low-power applications. [View tested ECUs](../hardware-configuration/ECUs/armECUs/index.md).
+- [View tested ECUs](../hardware-configuration/ECUs/armECUs/index.md).
+- Deploy on NVIDIA Jetson and other ARM platforms for low-power applications. 
 
 ## Key Configuration Areas
 
