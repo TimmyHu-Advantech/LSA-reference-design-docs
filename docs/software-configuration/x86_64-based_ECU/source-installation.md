@@ -46,7 +46,7 @@
    Then, import the necessary packages using vcs:
    ```bash
    # Note: Make sure to run the following commands locally on your machine (not over remote SSH)
-   vcs import src < Autoware.repos  
+   vcs import src < autoware.repos  
    ```
    ```bash
    vcs import src < extra-packages.repos
